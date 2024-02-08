@@ -61,10 +61,6 @@ end
 -- Define mapping for <F2> to call ToggleNetrw function
 vim.api.nvim_set_keymap('n', '<F2>', ':lua ToggleNetrw()<CR>', { silent = true })
 
--- Auto format rust files on exit
-vim.cmd([[
-    autocmd BufWritePre *.rs :silent! %!rustfmt
-]])
 
 -- Bindings for quick file search
 vim.api.nvim_set_keymap('n', '<C-f>', ':Files<CR>', {noremap = true})

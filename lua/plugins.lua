@@ -76,6 +76,13 @@ function M.setup()
 						end,
 				}
 
+				-- Tree sitter Text object Manipulation
+				use({
+						"nvim-treesitter/nvim-treesitter-textobjects",
+						after = "nvim-treesitter",
+						requires = "nvim-treesitter/nvim-treesitter",
+				})
+
 				-- Theme
 				use {
 						'folke/tokyonight.nvim',
@@ -97,6 +104,14 @@ function M.setup()
 						end,
 						requires = { 'nvim-tree/nvim-web-devicons', opt = true, }
 				}
+
+				-- LSP
+				use({
+						"neovim/nvim-lspconfig",
+						config = function()
+								require("config.lsp")
+						end,
+				})
 
 				-- Bootstrap Neovim
 				if packer_bootstrap then
