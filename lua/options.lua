@@ -62,7 +62,9 @@ end
 vim.api.nvim_set_keymap('n', '<F2>', ':lua ToggleNetrw()<CR>', { silent = true })
 
 -- Auto format rust files on exit
-vim.g.rustfmt_autosave = 1
+vim.cmd([[
+    autocmd BufWritePre *.rs :silent! %!rustfmt
+]])
 
 -- Bindings for quick file search
 vim.api.nvim_set_keymap('n', '<C-f>', ':Files<CR>', {noremap = true})
