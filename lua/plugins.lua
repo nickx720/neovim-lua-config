@@ -46,8 +46,7 @@ function M.setup()
 
     -- Vim Git
     use {
-      "tpope/vim-fugitive",
-      cmd = { "Git", "GBrowse", "Gdiffsplit", "Gvdiffsplit" },
+      "tpope/vim-fugitive"
     }
 
 	-- DAP Client For Debugging
