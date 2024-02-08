@@ -76,7 +76,27 @@ function M.setup()
 						end,
 				}
 
+				-- Theme
+				use {
+						'folke/tokyonight.nvim',
+						config = function()
+								require("config.theme").setup()
+						end,
+				}
 
+				-- Nvim Icons
+				use("nvim-tree/nvim-web-devicons")
+
+				-- Status Bar Lualine Match with Theme
+				use {
+						'nvim-lualine/lualine.nvim',
+						event = "BufEnter",
+
+				config = function()
+								require("config.lualine")
+						end,
+						requires = { 'nvim-tree/nvim-web-devicons', opt = true, }
+				}
 
 				-- Bootstrap Neovim
 				if packer_bootstrap then

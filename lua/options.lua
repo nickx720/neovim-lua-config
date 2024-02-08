@@ -69,3 +69,17 @@ vim.cmd([[
 -- Bindings for quick file search
 vim.api.nvim_set_keymap('n', '<C-f>', ':Files<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<C-A-f>', ':Rg<CR>', {noremap = true})
+
+-- Print numbers
+vim.opt.number = true
+-- UTF 8
+vim.opt.encoding = "utf-8"
+vim.opt.fileencoding = "utf-8"
+-- Show title
+vim.opt.title = true
+-- Highlight Line
+vim.opt.cursorline = true
+-- Ruler
+vim.opt.ruler = true
+-- Wildmenu
+vim.opt.wildmenu = true
