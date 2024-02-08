@@ -4,6 +4,7 @@ if not status then
 end
 
 
+
 lualine.setup({
 		options = {
 				icons_enabled = true,
