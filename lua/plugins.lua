@@ -49,8 +49,14 @@ function M.setup()
       "tpope/vim-fugitive"
     }
 
-	-- DAP Client For Debugging
-	use 'mfussenegger/nvim-dap'
+	-- Vimspector
+	use {
+    "puremourning/vimspector",
+    event = "BufRead",
+    config = function()
+        require("config.vimspector").setup()
+    end,
+}
 
 	-- FZF Installer
 	use {
