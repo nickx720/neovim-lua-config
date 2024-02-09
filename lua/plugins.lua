@@ -53,7 +53,7 @@ function M.setup()
 				use {
 						"puremourning/vimspector",
 						event = "BufRead",
-				config = function()
+						config = function()
 								require("config.vimspector").setup()
 						end,
 				}
@@ -71,7 +71,7 @@ function M.setup()
 								local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
 								ts_update()
 						end,
-				config = function()
+						config = function()
 								require("config.treesitter").setup()
 						end,
 				}
@@ -86,7 +86,7 @@ function M.setup()
 				-- Theme
 				use {
 						'folke/tokyonight.nvim',
-				config = function()
+						config = function()
 								require("config.theme").setup()
 						end,
 				}
@@ -99,21 +99,21 @@ function M.setup()
 						'nvim-lualine/lualine.nvim',
 						event = "BufEnter",
 
-						config = function()
-						require("config.lualine")
+				config = function()
+								require("config.lualine")
 						end,
 						requires = { 'nvim-tree/nvim-web-devicons', opt = true, }
 				}
 
 				-- LSP
 				use {'neoclide/coc.nvim', branch = 'release',
-						config = function()
+				config = function()
 								require("config.coc").setup()
 				end,}
 
 				-- ALE
 				use {'dense-analysis/ale',
-				config = function()
+						config = function()
 								require("config.coc").setup()
 				end,}
 
