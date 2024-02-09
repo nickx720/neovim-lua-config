@@ -36,6 +36,9 @@ vim.api.nvim_set_keymap('n', '<Leader>rn', '<Plug>(coc-rename)', { silent = true
 		-- Code lens
 vim.api.nvim_set_keymap('n', '<Leader>cl', '<Plug>(coc-codelens-action)', { silent = true, noremap = true })
 
+		-- Code format
+		vim.cmd([[autocmd BufWritePre * silent! call CocAction('format')]])
+
 end
 
 return M
