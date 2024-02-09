@@ -49,14 +49,6 @@ function M.setup()
 						"tpope/vim-fugitive"
 				}
 
-				-- Vimspector
-				use {
-						"puremourning/vimspector",
-						event = "BufRead",
-						config = function()
-								require("config.vimspector").setup()
-						end,
-				}
 
 				-- FZF Installer
 				use {
