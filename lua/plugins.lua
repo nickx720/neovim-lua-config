@@ -111,6 +111,12 @@ function M.setup()
 								require("config.coc").setup()
 				end,}
 
+				-- ALE
+				use {'dense-analysis/ale',
+				config = function()
+								require("config.coc").setup()
+				end,}
+
 				-- Bootstrap Neovim
 				if packer_bootstrap then
 						print "Restart Neovim required after installation!"
