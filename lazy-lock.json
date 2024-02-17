@@ -10,5 +10,5 @@
   "plenary.nvim": { "branch": "master", "commit": "4f71c0c4a196ceb656c824a70792f3df3ce6bb6d" },
   "tokyonight.nvim": { "branch": "main", "commit": "610179f7f12db3d08540b6cc61434db2eaecbcff" },
   "vim-fugitive": { "branch": "master", "commit": "011cf4fcb93a9649ffc6dcdff56ef948f5d0f7cc" },
-  "vimspector": { "branch": "master", "commit": "da7fc248dc699bf423378bd6e48eaa446f674ca7" }
+  "vimspector": { "branch": "master", "commit": "def092693ea33eb2055fb2cfbcabb8e56ea77963" }
 }

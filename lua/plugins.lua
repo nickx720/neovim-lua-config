@@ -23,10 +23,12 @@ function M.setup()
 
   -- Plugins Installed
   local plugins = {
-    { "nvim-lua/plenary.nvim" }, -- plenary
-    { "tpope/vim-fugitive" },    -- Vim Git
-    {
-      'junegunn/fzf.vim',        -- FZF Installer
+    { -- Plenary
+      "nvim-lua/plenary.nvim" },
+    { -- VIM Git
+      "tpope/vim-fugitive" },
+    { -- FZF Installer
+      'junegunn/fzf.vim',
       dependencies = { 'junegunn/fzf', build = ':call fzf#install()' }
     },
     { -- TreeSitter
@@ -58,7 +60,7 @@ function M.setup()
         require("config.lualine")
       end,
     },
-    {
+    {                     -- LSP
       'neoclide/coc.nvim',
       branch = 'release', -- LSP
       config = function()
