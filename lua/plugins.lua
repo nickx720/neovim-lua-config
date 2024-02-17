@@ -1,126 +1,74 @@
 local M = {}
 
 function M.setup()
-		-- Indicate first time installation
-		local packer_bootstrap = false
 
-		-- packer.nvim configuration
-		local conf = {
-				profile = {
-						enable = true,
-						threshold = 1, -- the amount in ms that a plugins load time must be over for it to be included in the profile
-				},
-
-				display = {
-						open_fn = function()
-								return require("packer.util").float { border = "rounded" }
-						end,
-				},
-		}
-
-		-- Check if packer.nvim is installed
-		-- Run PackerCompile if there are changes in this file
-		local function packer_init()
-				local fn = vim.fn
-				local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
-				if fn.empty(fn.glob(install_path)) > 0 then
-						packer_bootstrap = fn.system {
-								"git",
-								"clone",
-								"--depth",
-								"1",
-								"https://github.com/wbthomason/packer.nvim",
-								install_path,
-						}
-						vim.cmd [[packadd packer.nvim]]
-				end
-				vim.cmd "autocmd BufWritePost plugins.lua source <afile> | PackerCompile"
-		end
-
-		-- Plugins
-		local function plugins(use)
-				use { "wbthomason/packer.nvim" }
-
-				-- Load only when require
-				use { "nvim-lua/plenary.nvim", module = "plenary" }
-
-				-- Vim Git
-				use {
-						"tpope/vim-fugitive"
-				}
+  -- Check if packer.nvim is installed
+  -- Run PackerCompile if there are changes in this file
+  local function lazy_init()
+    local fn = vim.fn
+    local lazypath = fn.stdpath("data") .. "/lazy/lazy.nvim"
+    if not vim.loop.fs_stat(lazypath) then
+      vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+      })
+    end
+    vim.opt.rtp:prepend(lazypath)
+  end
 
 
-				-- FZF Installer
-				use {
-						'junegunn/fzf.vim',
-						requires = { 'junegunn/fzf', run = ':call fzf#install()' }
-				}
 
-				-- Tree Sitter
-				use {
-						'nvim-treesitter/nvim-treesitter',
-						run = function()
-								local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
-								ts_update()
-						end,
-						config = function()
-								require("config.treesitter").setup()
-						end,
-				}
+  -- Plugins
+  local plugins = {
+    { "nvim-lua/plenary.nvim" }, -- plenary
+    {"tpope/vim-fugitive"}, -- Vim Git
+    {
+      'junegunn/fzf.vim', -- FZF Installer
+      dependencies = { 'junegunn/fzf', build = ':call fzf#install()' }
+    },
+    { -- TreeSitter
+      'nvim-treesitter/nvim-treesitter',
+      event = "BufReadPre",
+      build = function()
+        local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+        ts_update()
+      end,
+      config = function()
+        require("config.treesitter").setup()
+      end,
+    },
+    { -- TreeSitter Text Objects
+      "nvim-treesitter/nvim-treesitter-textobjects",
+      dependencies = "nvim-treesitter/nvim-treesitter",
+    },
+    { -- Theme
+      'folke/tokyonight.nvim',
+      config = function()
+        require("config.theme").setup()
+      end,
+    },
+    { -- Status bar lualine for the theme
+      'nvim-lualine/lualine.nvim',
+      event = "BufEnter",
+      dependencies = 'nvim-tree/nvim-web-devicons',
+      config = function()
+        require("config.lualine")
+      end,
+    },
+    {'neoclide/coc.nvim', branch = 'release', -- LSP
+      config = function()
+        require("config.coc").setup()
+      end,}
 
-				-- Tree sitter Text object Manipulation
-				use({
-						"nvim-treesitter/nvim-treesitter-textobjects",
-						after = "nvim-treesitter",
-						requires = "nvim-treesitter/nvim-treesitter",
-				})
-
-				-- Theme
-				use {
-						'folke/tokyonight.nvim',
-						config = function()
-								require("config.theme").setup()
-						end,
-				}
-
-				-- Nvim Icons
-				use("nvim-tree/nvim-web-devicons")
-
-				-- Status Bar Lualine Match with Theme
-				use {
-						'nvim-lualine/lualine.nvim',
-						event = "BufEnter",
-
-				config = function()
-								require("config.lualine")
-						end,
-						requires = { 'nvim-tree/nvim-web-devicons', opt = true, }
-				}
-
-				-- LSP
-				use {'neoclide/coc.nvim', branch = 'release',
-				config = function()
-								require("config.coc").setup()
-				end,}
-
-				-- ALE
-				use {'dense-analysis/ale',
-						config = function()
-								require("config.coc").setup()
-				end,}
-
-				-- Bootstrap Neovim
-				if packer_bootstrap then
-						print "Restart Neovim required after installation!"
-						require("packer").sync()
-				end
-		end
-
-		-- Init and start packer
-		packer_init()
-		local packer = require "packer"
-		packer.init(conf)
-		packer.startup(plugins)
+  }
+  -- Init and start Lazy nvim
+  lazy_init()
+  local lazy = require "lazy"
+  lazy.setup(plugins)
 end
 
 return M

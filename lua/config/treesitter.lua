@@ -15,7 +15,7 @@ function M.setup()
 						"rust",
 						"css",
 						"html",
-						"lua",
+            "lua",
 						"zig"
 				},
 
