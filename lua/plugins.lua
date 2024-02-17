@@ -1,7 +1,6 @@
 local M = {}
 
 function M.setup()
-
   -- Check if packer.nvim is installed
   -- Run PackerCompile if there are changes in this file
   local function lazy_init()
@@ -22,12 +21,12 @@ function M.setup()
 
 
 
-  -- Plugins
+  -- Plugins Installed
   local plugins = {
     { "nvim-lua/plenary.nvim" }, -- plenary
-    {"tpope/vim-fugitive"}, -- Vim Git
+    { "tpope/vim-fugitive" },    -- Vim Git
     {
-      'junegunn/fzf.vim', -- FZF Installer
+      'junegunn/fzf.vim',        -- FZF Installer
       dependencies = { 'junegunn/fzf', build = ':call fzf#install()' }
     },
     { -- TreeSitter
@@ -59,11 +58,19 @@ function M.setup()
         require("config.lualine")
       end,
     },
-    {'neoclide/coc.nvim', branch = 'release', -- LSP
+    {
+      'neoclide/coc.nvim',
+      branch = 'release', -- LSP
       config = function()
         require("config.coc").setup()
-      end,}
-
+      end,
+    },
+    { -- Vimspector
+      'puremourning/vimspector',
+      config = function()
+        require("config.vimspector").setup()
+      end,
+    },
   }
   -- Init and start Lazy nvim
   lazy_init()

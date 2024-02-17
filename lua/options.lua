@@ -5,23 +5,23 @@ vim.opt.softtabstop = 2
 vim.opt.autoindent = true
 vim.opt.smartindent = true
 vim.opt.expandtab = true
-vim.opt.scrolloff=5
+vim.opt.scrolloff = 5
 
 -- Auto close
-vim.api.nvim_set_keymap('i', '"<space>', '""<left>', {noremap = true})
-vim.api.nvim_set_keymap('i', "'<space>", "''<left>", {noremap = true})
-vim.api.nvim_set_keymap('i', '`<space>', '``<left>', {noremap = true})
-vim.api.nvim_set_keymap('i', '(<space>', '()<left>', {noremap = true})
-vim.api.nvim_set_keymap('i', '[<space>', '[]<left>', {noremap = true})
-vim.api.nvim_set_keymap('i', '{<space>', '{}<left>', {noremap = true})
-vim.api.nvim_set_keymap('i', '<<CR>', '<><left>', {noremap = true})
+vim.api.nvim_set_keymap('i', '"<space>', '""<left>', { noremap = true })
+vim.api.nvim_set_keymap('i', "'<space>", "''<left>", { noremap = true })
+vim.api.nvim_set_keymap('i', '`<space>', '``<left>', { noremap = true })
+vim.api.nvim_set_keymap('i', '(<space>', '()<left>', { noremap = true })
+vim.api.nvim_set_keymap('i', '[<space>', '[]<left>', { noremap = true })
+vim.api.nvim_set_keymap('i', '{<space>', '{}<left>', { noremap = true })
+vim.api.nvim_set_keymap('i', '<<CR>', '<><left>', { noremap = true })
 
 -- Set Mouse support
 vim.opt.mouse = "a"
 
 -- Moving selected text up and down
-vim.api.nvim_set_keymap('x', 'K', ":move '<-2<CR>gv-gv", {noremap = true})
-vim.api.nvim_set_keymap('x', 'J', ":move '>+1<CR>gv-gv", {noremap = true})
+vim.api.nvim_set_keymap('x', 'K', ":move '<-2<CR>gv-gv", { noremap = true })
+vim.api.nvim_set_keymap('x', 'J', ":move '>+1<CR>gv-gv", { noremap = true })
 
 
 -- Remove trailing whitespace and newlines at file save
@@ -67,8 +67,8 @@ vim.api.nvim_set_keymap('n', '<F2>', ':lua ToggleNetrw()<CR>', { silent = true }
 
 
 -- Bindings for quick file search
-vim.api.nvim_set_keymap('n', '<C-f>', ':Files<CR>', {noremap = true})
-vim.api.nvim_set_keymap('n', '<C-A-f>', ':Rg<CR>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<C-f>', ':Files<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<C-A-f>', ':Rg<CR>', { noremap = true })
 
 -- Print numbers
 vim.opt.number = true
