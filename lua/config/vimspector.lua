@@ -1,10 +1,10 @@
 local M = {}
 
 function M.setup()
-  -- Vimspector mappings
-  vim.api.nvim_set_keymap('n', '<F6>', ':lua require("vimp").call("vimspector#Launch")()<CR>',
+  -- Vimspector mapp
+  vim.api.nvim_set_keymap('n', '<F7>', ':lua require("vimp").call("vimspector#Launch")()<CR>',
     { noremap = true, silent = true })
-  vim.api.nvim_set_keymap('n', '<F7>', ':lua require("vimp").call("vimspector#Reset")()<CR>',
+  vim.api.nvim_set_keymap('n', '', ':lua require("vimp").call("vimspector#Reset")()<CR>',
     { noremap = true, silent = true })
   vim.api.nvim_set_keymap('n', '<F8>', ':lua require("vimp").call("vimspector#Continue")()<CR>',
     { noremap = true, silent = true })

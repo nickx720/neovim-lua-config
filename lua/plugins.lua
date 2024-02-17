@@ -60,17 +60,11 @@ function M.setup()
         require("config.lualine")
       end,
     },
-    {                     -- LSP
+    { -- LSP
       'neoclide/coc.nvim',
-      branch = 'release', -- LSP
+      branch = 'release',
       config = function()
         require("config.coc").setup()
-      end,
-    },
-    { -- Vimspector
-      'puremourning/vimspector',
-      config = function()
-        require("config.vimspector").setup()
       end,
     },
   }
