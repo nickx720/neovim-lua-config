@@ -67,6 +67,14 @@ function M.setup()
         require("config.coc").setup()
       end,
     },
+    { -- DAP
+      'mfussenegger/nvim-dap',
+      config = function()
+        require("config.dap").setup()
+      end,
+      keys = require("config.dap").keys,
+      dependencies = require("config.dap").dependencies
+    },
   }
   -- Init and start Lazy nvim
   lazy_init()
