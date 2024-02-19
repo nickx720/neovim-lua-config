@@ -39,13 +39,12 @@ function M.setup()
       {
         type = "pwa-chrome",
         request = "launch",
-        name = "Launch & Debug Chrome",
+        name = "Launch & Debug Brave",
         url = function()
           local co = coroutine.running()
           return coroutine.create(function()
             vim.ui.input({
               prompt = "Enter URL: ",
-              default = "http://localhost:1000(overwrite this)",
             }, function(url)
               if url == nil or url == "" then
                 return
@@ -56,11 +55,9 @@ function M.setup()
           end)
         end,
         webRoot = vim.fn.getcwd(),
-        protocol = "inspector",
         sourceMaps = true,
-        port = 9222,
         runtimeExecutable = "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser",
-        userDataDir = false,
+        protocol = "inspector",
         skipFiles = { "${workspaceFolder}/node_modules/**/*.js" },
       },
       -- Divider for the launch.json derived configs
@@ -164,11 +161,6 @@ M.dependencies = {
     end,
   },
   {
-    "Joakker/lua-json5",
-    build = "./install.sh",
-  },
-
-  {
     "rcarriga/nvim-dap-ui",
     keys = {
       { "<leader>du", function() require("dapui").toggle({}) end, desc = "Dap UI" },
@@ -189,7 +181,16 @@ M.dependencies = {
         dapui.close({})
       end
     end,
-  },
+  }, {
+  "theHamsta/nvim-dap-virtual-text",
+  config = function()
+    local dapvi = require("nvim-dap-virtual-text")
+    local opts = {
+      enabled = true
+    }
+    dapvi.setup(opts)
+  end
+}
 }
 
 return M
