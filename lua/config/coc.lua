@@ -40,6 +40,18 @@ function M.setup()
 
   -- Code format
   vim.cmd([[autocmd BufWritePre * silent! call CocAction('format')]])
+  -- Show type
+  -- Use K to show documentation in preview window
+  vim.api.nvim_set_keymap('n', 'K', ':lua show_documentation()<CR>', { silent = true })
+
+  function show_documentation()
+    local filetype = vim.bo.filetype
+    if vim.tbl_contains({ 'vim', 'help' }, filetype) then
+      vim.cmd('h ' .. vim.fn.expand('<cword>'))
+    else
+      vim.fn.CocActionAsync('doHover')
+    end
+  end
 end
 
 return M
