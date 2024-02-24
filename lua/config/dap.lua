@@ -8,10 +8,37 @@ local js_based_languages = {
 
 function M.setup()
   local dap = require("dap")
-
+  -- Get the prefix directory where LLVM is installed using `brew --prefix`
+  local llvm_prefix = vim.fn.trim(vim.fn.system("brew --prefix llvm")) .. "/bin/lldb-vscode"
   vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
 
+  -- https://davelage.com/posts/nvim-dap-getting-started/
+  dap.adapters.lldb = {
+    type = "executable",
+    command = llvm_prefix, -- adjust as needed
+    name = "lldb",
+  }
 
+  local lldb = {
+    name = "Launch lldb",
+    type = "lldb",      -- matches the adapter
+    request = "launch", -- could also attach to a currently running process
+    program = function()
+      return vim.fn.input(
+        "Path to executable: ",
+        vim.fn.getcwd() .. "/",
+        "file"
+      )
+    end,
+    cwd = "${workspaceFolder}",
+    stopOnEntry = false,
+    args = {},
+    runInTerminal = false,
+  }
+
+  dap.configurations.rust = {
+    lldb
+  }
   for _, language in ipairs(js_based_languages) do
     dap.configurations[language] = {
       -- Debug single nodejs files
@@ -159,6 +186,11 @@ M.dependencies = {
         -- log_console_level = vim.log.levels.ERROR,
       })
     end,
+  },
+  {
+    'mrcjkb/rustaceanvim',
+    version = '^4', -- Recommended
+    ft = { 'rust' },
   },
   {
     "rcarriga/nvim-dap-ui",
