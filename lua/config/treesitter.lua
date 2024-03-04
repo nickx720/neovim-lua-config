@@ -124,17 +124,19 @@ function M.setup()
       enable_autocmd = false,
     },
   }
-  vim.opt.foldmethod = 'expr'
-  vim.opt.foldexpr   = 'nvim_treesitter#foldexpr()'
-  ---WORKAROUND
-  ---		vim.api.nvim_create_autocmd({'BufEnter','BufAdd','BufNew','BufNewFile','BufWinEnter'}, {
-  ---				group = vim.api.nvim_create_augroup('TS_FOLD_WORKAROUND', {}),
-  ---				callback = function()
-  ---						vim.opt.foldmethod     = 'expr'
-  ---						vim.opt.foldexpr       = 'nvim_treesitter#foldexpr()'
-  ---				end
-  ---		})
-  ---ENDWORKAROUND
+  vim.opt.foldmethod  = 'expr'
+  vim.opt.foldexpr    = 'nvim_treesitter#foldexpr()'
+
+  -- Folding
+  vim.wo.foldminlines = 5 -- Adjust the value as needed
+  -- Define a Lua function to close the fold under the cursor
+  function close_fold_under_cursor()
+    -- Execute the 'zc' command to close the fold
+    vim.cmd('normal! zc')
+  end
+
+  -- Map a keybinding to call the close_fold_under_cursor function
+  vim.api.nvim_set_keymap('n', '<TAB>', ':lua close_fold_under_cursor()<CR>', { noremap = true, silent = true })
 end
 
 return M
