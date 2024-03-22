@@ -26,7 +26,7 @@ function M.setup()
     program = function()
       return vim.fn.input(
         "Path to executable: ",
-        vim.fn.getcwd() .. "/",
+        vim.fn.getcwd() .. "/target/debug/",
         "file"
       )
     end,
@@ -37,8 +37,15 @@ function M.setup()
   }
 
   dap.configurations.rust = {
-    lldb
+    lldb,
+    {
+      name = "----- ↓ launch.json configs ↓ -----",
+      type = "",
+      request = "launch",
+    },
   }
+
+  -- For js based auto launch
   for _, language in ipairs(js_based_languages) do
     dap.configurations[language] = {
       -- Debug single nodejs files
@@ -146,6 +153,7 @@ M.keys = {
 }
 
 M.dependencies = {
+  { "nvim-neotest/nvim-nio" },
   {
     "microsoft/vscode-js-debug",
     -- After install, build it and rename the dist directory to out

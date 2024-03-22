@@ -16,7 +16,9 @@ function M.setup()
       "html",
       "lua",
       "zig",
-      "go"
+      "go",
+      "c",
+      "cpp"
     },
 
     -- Install languages synchronously (only applied to `ensure_installed`)
