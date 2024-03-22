@@ -18,7 +18,8 @@ function M.setup()
       "zig",
       "go",
       "c",
-      "cpp"
+      "cpp",
+      "comment"
     },
 
     -- Install languages synchronously (only applied to `ensure_installed`)
