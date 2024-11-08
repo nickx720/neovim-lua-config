@@ -19,12 +19,7 @@ function M.setup()
     { expr = true, silent = true })
 
   -- Use <C-Space> to trigger completion
-  if vim.fn.has('nvim') == 1 then
-    vim.api.nvim_set_keymap('i', '<C-Space>', '<Plug>(coc-refresh)', { silent = true })
-  else
-    vim.api.nvim_set_keymap('i', '<C-@>', '<Plug>(coc-refresh)', { silent = true })
-  end
-
+  vim.api.nvim_set_keymap('i', '<C-Space>', 'coc#refresh()', { silent = true })
   -- GoTo code navigation mappings
   vim.api.nvim_set_keymap('n', '<F3>', '<Plug>(coc-definition)', { silent = true, noremap = true })
 
