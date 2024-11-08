@@ -21,11 +21,11 @@ function M.setup()
   -- Use <C-Space> to trigger completion
   vim.api.nvim_set_keymap('i', '<C-Space>', 'coc#refresh()', { silent = true })
   -- GoTo code navigation mappings
-  vim.api.nvim_set_keymap('n', '<F3>', '<Plug>(coc-definition)', { silent = true, noremap = true })
+  vim.api.nvim_set_keymap('n', '<F3>', '<Plug>(coc-definition)', { silent = true })
 
-  vim.api.nvim_set_keymap('n', '<F4>', '<Plug>(coc-type-definition)', { silent = true, noremap = true })
-  vim.api.nvim_set_keymap('n', '<F5>', '<Plug>(coc-implementation)', { silent = true, noremap = true })
-  vim.api.nvim_set_keymap('n', '<F6>', '<Plug>(coc-references)', { silent = true, noremap = true })
+  vim.api.nvim_set_keymap('n', '<F4>', '<Plug>(coc-type-definition)', { silent = true })
+  vim.api.nvim_set_keymap('n', '<F5>', '<Plug>(coc-implementation)', { silent = true })
+  vim.api.nvim_set_keymap('n', '<F6>', '<Plug>(coc-references)', { silent = true })
 
   -- Symbol renaming
   vim.api.nvim_set_keymap('n', '<Leader>rn', '<Plug>(coc-rename)', { silent = true, noremap = true })
