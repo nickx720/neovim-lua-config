@@ -75,6 +75,17 @@ function M.setup()
       keys = require("config.dap").keys,
       dependencies = require("config.dap").dependencies
     },
+    {
+      -- Nvim - metals
+      'scalameta/nvim-metals',
+      dependencies = require("config.nvim-metals").dependencies,
+      config = function(self, metals_config)
+        require("config.nvim-metals").setup(self, metals_config)
+      end,
+      ft = require("config.nvim-metals").ft,
+      opts = require("config.nvim-metals").opts,
+
+    },
   }
   -- Init and start Lazy nvim
   lazy_init()
