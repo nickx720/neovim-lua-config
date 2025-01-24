@@ -27,6 +27,15 @@ function M.setup()
   vim.keymap.set('n', '<F5>', '<Plug>(coc-implementation)', { silent = true })
   vim.keymap.set('n', '<F6>', '<Plug>(coc-references)', { silent = true })
 
+  -- Enable autosave on coc-go
+  -- Automatically organize imports for Go files before saving
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*.go",
+    callback = function()
+      vim.fn.CocAction('runCommand', 'editor.action.organizeImport')
+    end,
+  })
+
   -- Symbol renaming
   vim.keymap.set('n', '<Leader>rn', '<Plug>(coc-rename)', { silent = true, noremap = true })
 

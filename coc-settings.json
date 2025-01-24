@@ -1,5 +1,6 @@
 {
   "coc.preferences.jumpCommand": "tabe",
   "rust-analyzer.enable": true,
-  "coc.preferences.formatOnSave": true
+  "coc.preferences.formatOnSave": true,
+  "go.enable": true
 }
