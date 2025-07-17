@@ -50,13 +50,25 @@ function M.setup()
     end,
   })
   
+<<<<<<< Updated upstream
   -- Format other file types on save
+=======
+  -- Format other file types on save (only if formatter is available)
+>>>>>>> Stashed changes
   vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*",
     callback = function()
       local ft = vim.bo.filetype
       if not vim.tbl_contains({'javascript', 'javascriptreact', 'typescript', 'typescriptreact'}, ft) then
+<<<<<<< Updated upstream
         vim.fn.CocAction('format')
+=======
+        -- Check if CoC has a formatter for this buffer before attempting to format
+        local has_formatter = vim.fn.CocHasProvider('format')
+        if has_formatter then
+          vim.fn.CocAction('format')
+        end
+>>>>>>> Stashed changes
       end
     end,
   })
