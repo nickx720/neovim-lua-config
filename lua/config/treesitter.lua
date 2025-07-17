@@ -133,6 +133,7 @@ function M.setup()
 
   -- Folding
   vim.wo.foldminlines = 5 -- Adjust the value as needed
+  vim.opt.foldlevel = 20        -- Prevent folds from auto-collapsing during operations
   -- Define a Lua function to close the fold under the cursor
   function close_fold_under_cursor()
     -- Execute the 'zc' command to close the fold

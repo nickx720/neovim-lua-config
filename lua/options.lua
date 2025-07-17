@@ -6,6 +6,8 @@ vim.opt.autoindent = true
 vim.opt.smartindent = true
 vim.opt.expandtab = true
 vim.opt.scrolloff = 5
+vim.opt.colorcolumn = "80"
+vim.opt.textwidth = 80
 
 -- Auto close
 vim.api.nvim_set_keymap('i', '"<space>', '""<left>', { noremap = true })
