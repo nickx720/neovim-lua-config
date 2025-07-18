@@ -1,19 +1,19 @@
 {
   "coc.preferences.jumpCommand": "tabe",
   "rust-analyzer.enable": true,
-  "coc.preferences.formatOnSave": true,
-  "go.enable": true,
+  "eslint.nodePath": "./node_modules",
+  "eslint.probe": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "html"
+  ],
   "languageserver": {
     "go": {
       "command": "gopls",
-      "filetypes": [
-        "go",
-        "gomod"
-      ],
-      "rootPatterns": [
-        "go.mod",
-        ".git/"
-      ],
+      "filetypes": ["go", "gomod"],
+      "rootPatterns": ["go.mod", ".git/"],
       "initializationOptions": {
         "usePlaceholders": true,
         "staticcheck": true,
@@ -27,5 +27,5 @@
         }
       }
     }
-  }
+  },
 }

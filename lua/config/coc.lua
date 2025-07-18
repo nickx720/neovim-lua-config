@@ -42,8 +42,28 @@ function M.setup()
   -- Code lens
   vim.keymap.set('n', '<Leader>cl', '<Plug>(coc-codelens-action)', { silent = true, noremap = true })
 
-  -- Code format
-  vim.cmd([[autocmd BufWritePre * silent! call CocAction('format')]])
+  -- Auto-fix eslint on save for JS/TS files, format others
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = {"*.js", "*.jsx", "*.ts", "*.tsx"},
+    callback = function()
+      vim.fn.CocAction('runCommand', 'eslint.executeAutofix')
+    end,
+  })
+
+  -- Format other file types on save (only if formatter is available)
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*",
+    callback = function()
+      local ft = vim.bo.filetype
+      if not vim.tbl_contains({'javascript', 'javascriptreact', 'typescript', 'typescriptreact'}, ft) then
+        -- Check if CoC has a formatter for this buffer before attempting to format
+        local has_formatter = vim.fn.CocHasProvider('format')
+        if has_formatter then
+          vim.fn.CocAction('format')
+        end
+      end
+    end,
+  })
   -- Show type
   -- Use K to show documentation in preview window
   vim.keymap.set('n', 'K', ':lua show_documentation()<CR>', { silent = true })
