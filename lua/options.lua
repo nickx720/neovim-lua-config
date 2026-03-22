@@ -64,6 +64,104 @@ function ToggleNetrw()
   end
 end
 
+local function show_hotkeys()
+  local lines = {
+    "Neovim Hotkeys",
+    "",
+    "Normal mode",
+    "F1          Show this hotkey help",
+    "F2          Toggle netrw",
+    "F3          Go to definition",
+    "F4          Go to type definition",
+    "F5          Go to implementation",
+    "F6          Show references",
+    "F7          Toggle breakpoint",
+    "F8          Show line diagnostics",
+    "K           Hover documentation",
+    "[d          Previous diagnostic",
+    "]d          Next diagnostic",
+    "<C-f>       File search",
+    "<C-A-f>     Ripgrep search",
+    "<Leader>rn  Rename symbol",
+    "<Leader>cl  Run code lens action",
+    "<Leader>di  DAP step into",
+    "<Leader>dO  DAP step out",
+    "<Leader>do  DAP step over",
+    "<Leader>da  DAP continue / run with args",
+    "<Leader>du  Toggle DAP UI",
+    "<Leader>de  Eval under cursor/selection",
+    "<Leader>sx  Swap parameter with next",
+    "<Leader>sX  Swap parameter with previous",
+    "]m          Next function start",
+    "]M          Next function end",
+    "]]          Next class start",
+    "][          Next class end",
+    "[m          Previous function start",
+    "[M          Previous function end",
+    "[[          Previous class start",
+    "[]          Previous class end",
+    "<Leader>cf  Peek function definition",
+    "<Leader>cF  Peek class definition",
+    "",
+    "Visual mode",
+    "K           Move selection up",
+    "J           Move selection down",
+    "",
+    "Insert mode",
+    "<Tab>       Next completion item / refresh",
+    "<S-Tab>     Previous completion item",
+    "<CR>        Confirm completion / enter",
+    "<C-Space>   Trigger completion",
+    "\"<Space>    Insert paired double quotes",
+    "'<Space>    Insert paired single quotes",
+    "`<Space>    Insert paired backticks",
+    "(<Space>    Insert paired parentheses",
+    "[<Space>    Insert paired brackets",
+    "{<Space>    Insert paired braces",
+    "<<CR>       Insert paired angle brackets",
+    "",
+    "Press q or <Esc> to close",
+  }
+
+  local width = 0
+  for _, line in ipairs(lines) do
+    width = math.max(width, #line)
+  end
+
+  local buf = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+  vim.bo[buf].bufhidden = "wipe"
+  vim.bo[buf].modifiable = false
+
+  local height = #lines
+  local win = vim.api.nvim_open_win(buf, true, {
+    relative = "editor",
+    width = width + 4,
+    height = height + 2,
+    row = math.max(1, math.floor((vim.o.lines - height) / 2) - 1),
+    col = math.max(1, math.floor((vim.o.columns - width) / 2) - 2),
+    style = "minimal",
+    border = "rounded",
+    title = " Hotkeys ",
+    title_pos = "center",
+  })
+
+  vim.keymap.set("n", "q", function()
+    if vim.api.nvim_win_is_valid(win) then
+      vim.api.nvim_win_close(win, true)
+    end
+  end, { buffer = buf, silent = true })
+
+  vim.keymap.set("n", "<Esc>", function()
+    if vim.api.nvim_win_is_valid(win) then
+      vim.api.nvim_win_close(win, true)
+    end
+  end, { buffer = buf, silent = true })
+end
+
+vim.keymap.set("n", "<F1>", show_hotkeys, { silent = true, desc = "Show hotkey help" })
+
+
 -- Define mapping for <F2> to call ToggleNetrw function
 vim.api.nvim_set_keymap('n', '<F2>', ':lua ToggleNetrw()<CR>', { silent = true })
 
