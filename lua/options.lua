@@ -68,6 +68,10 @@ end
 vim.api.nvim_set_keymap('n', '<F2>', ':lua ToggleNetrw()<CR>', { silent = true })
 
 
+vim.keymap.set("n", "<F8>", vim.diagnostic.open_float, { silent = true, desc = "Line diagnostics" })
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { silent = true, desc = "Prev diagnostic" })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { silent = true, desc = "Next diagnostic" })
+
 -- Bindings for quick file search
 vim.api.nvim_set_keymap('n', '<C-f>', ':Files<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-A-f>', ':Rg<CR>', { noremap = true })
