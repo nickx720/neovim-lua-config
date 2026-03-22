@@ -3,24 +3,13 @@ local M = {}
 function M.setup()
   require("nvim-treesitter.configs").setup {
     -- One of "all", "maintained" (parsers with maintainers), or a list of languages
-    ensure_installed = {
-      "markdown",
-      "tsx",
-      "typescript",
-      "javascript",
-      "toml",
-      "json",
-      "yaml",
-      "rust",
-      "css",
-      "html",
-      "lua",
-      "zig",
-      "go",
-      "c",
-      "cpp",
-      "comment"
-    },
+     ensure_installed = {
+       "lua",
+       "javascript",
+       "typescript",
+       "rust",
+       "comment"
+     },
 
     -- Install languages synchronously (only applied to `ensure_installed`)
     sync_install = false,
@@ -30,12 +19,9 @@ function M.setup()
       enable = true,
     },
 
-    rainbow = {
-      enable = true,
-      disable = { "html" },
-      extended_mode = false,
-      max_file_lines = nil,
-    },
+     rainbow = {
+       enable = false,
+     },
 
     incremental_selection = {
       enable = true,
@@ -117,10 +103,10 @@ function M.setup()
       enable = true,
     },
 
-    -- autotag
-    autotag = {
-      enable = true,
-    },
+     -- autotag
+     autotag = {
+       enable = false,
+     },
 
     -- context_commentstring
     context_commentstring = {
@@ -128,20 +114,7 @@ function M.setup()
       enable_autocmd = false,
     },
   }
-  vim.opt.foldmethod  = 'expr'
-  vim.opt.foldexpr    = 'nvim_treesitter#foldexpr()'
-
-  -- Folding
-  vim.wo.foldminlines = 5 -- Adjust the value as needed
-  vim.opt.foldlevel = 20        -- Prevent folds from auto-collapsing during operations
-  -- Define a Lua function to close the fold under the cursor
-  function close_fold_under_cursor()
-    -- Execute the 'zc' command to close the fold
-    vim.cmd('normal! zc')
-  end
-
-  -- Map a keybinding to call the close_fold_under_cursor function
-  vim.api.nvim_set_keymap('n', '<TAB>', ':lua close_fold_under_cursor()<CR>', { noremap = true, silent = true })
+   vim.opt.foldmethod = 'manual'
 end
 
 return M

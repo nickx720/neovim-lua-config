@@ -33,10 +33,7 @@ vim.cmd([[
   autocmd BufWritePre *.c,*.h %s/\%$/\r/e
 ]])
 
--- Opens images in neovim
-vim.cmd([[
-  autocmd BufEnter *.png,*.jpg,*.gif exec "! ~/.iterm2/imgcat " .. vim.fn.expand("%") | :bw
-]])
+
 
 -- Replacing NERDTree with NetRw
 -- Set netrw options
@@ -63,6 +60,9 @@ function ToggleNetrw()
     vim.cmd("silent Lexplore")
   end
 end
+
+-- Define mapping for <F2> to call ToggleNetrw function
+vim.api.nvim_set_keymap('n', '<F2>', ':lua ToggleNetrw()<CR>', { silent = true })
 
 local function show_hotkeys()
   local lines = {
@@ -162,17 +162,13 @@ end
 vim.keymap.set("n", "<F1>", show_hotkeys, { silent = true, desc = "Show hotkey help" })
 
 
--- Define mapping for <F2> to call ToggleNetrw function
-vim.api.nvim_set_keymap('n', '<F2>', ':lua ToggleNetrw()<CR>', { silent = true })
-
+-- Bindings for quick file search
+vim.api.nvim_set_keymap('n', '<C-f>', ':Files<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<C-A-f>', ':Rg<CR>', { noremap = true })
 
 vim.keymap.set("n", "<F8>", vim.diagnostic.open_float, { silent = true, desc = "Line diagnostics" })
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { silent = true, desc = "Prev diagnostic" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { silent = true, desc = "Next diagnostic" })
-
--- Bindings for quick file search
-vim.api.nvim_set_keymap('n', '<C-f>', ':Files<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<C-A-f>', ':Rg<CR>', { noremap = true })
 
 -- Print numbers
 vim.opt.number = true

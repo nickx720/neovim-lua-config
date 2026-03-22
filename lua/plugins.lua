@@ -22,15 +22,18 @@ function M.setup()
 
 
   -- Plugins Installed
-  local plugins = {
-    { -- Plenary
-      "nvim-lua/plenary.nvim" },
-    { -- VIM Git
-      "tpope/vim-fugitive" },
-    { -- FZF Installer
-      'junegunn/fzf.vim',
-      dependencies = { 'junegunn/fzf', build = ':call fzf#install()' }
-    },
+   local plugins = {
+     { -- Plenary
+       "nvim-lua/plenary.nvim",
+       event = "VeryLazy" },
+     { -- VIM Git
+       "tpope/vim-fugitive",
+       event = "VeryLazy" },
+     { -- FZF Installer
+       'junegunn/fzf.vim',
+       dependencies = { 'junegunn/fzf', build = ':call fzf#install()' },
+       event = "VeryLazy"
+     },
     { -- TreeSitter
       'nvim-treesitter/nvim-treesitter',
       event = "BufReadPre",
