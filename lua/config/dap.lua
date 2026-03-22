@@ -6,33 +6,75 @@ local js_based_languages = {
   "javascriptreact"
 }
 
+local function find_lldb_adapter()
+  local llvm_lldb = vim.fn.trim(vim.fn.system("brew --prefix llvm 2>/dev/null")) .. "/bin/lldb-vscode"
+  if vim.fn.executable(llvm_lldb) == 1 then
+    return llvm_lldb
+  end
+
+  local xcode_lldb = vim.fn.trim(vim.fn.system("xcrun --find lldb-dap 2>/dev/null"))
+  if vim.v.shell_error == 0 and xcode_lldb ~= "" then
+    return xcode_lldb
+  end
+
+  return "lldb-dap"
+end
+
+local function split_args(input)
+  if input == nil or input == "" then
+    return {}
+  end
+
+  local args = {}
+  for arg in string.gmatch(input, "%S+") do
+    table.insert(args, arg)
+  end
+  return args
+end
+
+local function rust_debug_program()
+  local metadata_json = vim.fn.system("cargo metadata --no-deps --format-version 1")
+  if vim.v.shell_error == 0 then
+    local ok, metadata = pcall(vim.json.decode, metadata_json)
+    if ok and metadata and metadata.packages then
+      for _, package in ipairs(metadata.packages) do
+        for _, target in ipairs(package.targets or {}) do
+          if vim.tbl_contains(target.kind or {}, "bin") then
+            return string.format("%s/debug/%s", metadata.target_directory, target.name)
+          end
+        end
+      end
+    end
+  end
+
+  return vim.fn.input(
+    "Path to executable: ",
+    vim.fn.getcwd() .. "/target/debug/",
+    "file"
+  )
+end
+
 function M.setup()
   local dap = require("dap")
-  -- Get the prefix directory where LLVM is installed using `brew --prefix`
-  local llvm_prefix = vim.fn.trim(vim.fn.system("brew --prefix llvm")) .. "/bin/lldb-vscode"
   vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
 
   -- https://davelage.com/posts/nvim-dap-getting-started/
   dap.adapters.lldb = {
     type = "executable",
-    command = llvm_prefix, -- adjust as needed
+    command = find_lldb_adapter(),
     name = "lldb",
   }
 
   local lldb = {
-    name = "Launch lldb",
+    name = "Launch Rust binary",
     type = "lldb",      -- matches the adapter
     request = "launch", -- could also attach to a currently running process
-    program = function()
-      return vim.fn.input(
-        "Path to executable: ",
-        vim.fn.getcwd() .. "/target/debug/",
-        "file"
-      )
-    end,
+    program = rust_debug_program,
     cwd = "${workspaceFolder}",
     stopOnEntry = false,
-    args = {},
+    args = function()
+      return split_args(vim.fn.input("Program arguments: "))
+    end,
     runInTerminal = false,
   }
 
