@@ -50,20 +50,21 @@ function M.setup()
     end,
   })
 
-  -- Format other file types on save (only if formatter is available)
-  vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = "*",
-    callback = function()
-      local ft = vim.bo.filetype
-      if not vim.tbl_contains({'javascript', 'javascriptreact', 'typescript', 'typescriptreact'}, ft) then
-        -- Check if CoC has a formatter for this buffer before attempting to format
-        local has_formatter = vim.fn.CocHasProvider('format')
-        if has_formatter then
-          vim.fn.CocAction('format')
-        end
-      end
-    end,
-  })
+   -- Format other file types on save (only if formatter is available)
+   local format_filetypes = {'lua', 'rust', 'go', 'python', 'json', 'yaml', 'toml'}
+   vim.api.nvim_create_autocmd("BufWritePre", {
+     pattern = "*",
+     callback = function()
+       local ft = vim.bo.filetype
+       if vim.tbl_contains(format_filetypes, ft) then
+         -- Check if CoC has a formatter for this buffer before attempting to format
+         local has_formatter = vim.fn.CocHasProvider('format')
+         if has_formatter then
+           vim.fn.CocAction('format')
+         end
+       end
+     end,
+   })
   -- Show type
   -- Use K to show documentation in preview window
   vim.keymap.set('n', 'K', ':lua show_documentation()<CR>', { silent = true })
