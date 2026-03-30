@@ -26,12 +26,25 @@ vim.api.nvim_set_keymap('x', 'K', ":move '<-2<CR>gv-gv", { noremap = true })
 vim.api.nvim_set_keymap('x', 'J', ":move '>+1<CR>gv-gv", { noremap = true })
 
 
--- Remove trailing whitespace and newlines at file save
-vim.cmd([[
-  autocmd BufWritePre * %s/\s\+$//e
-  autocmd BufWritePre * %s/\n\+\%$//e
-  autocmd BufWritePre *.c,*.h %s/\%$/\r/e
-]])
+-- Remove trailing whitespace and newlines at file save (only if no editorconfig)
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  callback = function()
+    if not vim.b.editorconfig then
+      vim.cmd("%s/\\s\\+$//e")
+      vim.cmd("%s/\\n\\+\\%$//e")
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = {"*.c", "*.h"},
+  callback = function()
+    if not vim.b.editorconfig then
+      vim.cmd("%s/\\%$/\\r/e")
+    end
+  end,
+})
 
 
 

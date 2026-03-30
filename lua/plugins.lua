@@ -36,18 +36,12 @@ function M.setup()
      },
     { -- TreeSitter
       'nvim-treesitter/nvim-treesitter',
-      event = "BufReadPre",
-      build = function()
-        local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
-        ts_update()
-      end,
+      branch = "main",
+      lazy = false,
+      build = ':TSUpdate',
       config = function()
         require("config.treesitter").setup()
       end,
-    },
-    { -- TreeSitter Text Objects
-      "nvim-treesitter/nvim-treesitter-textobjects",
-      dependencies = "nvim-treesitter/nvim-treesitter",
     },
     { -- Theme
       'folke/tokyonight.nvim',
@@ -77,6 +71,9 @@ function M.setup()
       end,
       keys = require("config.dap").keys,
       dependencies = require("config.dap").dependencies
+    },
+    { -- EditorConfig
+      'editorconfig/editorconfig-vim',
     },
   }
   -- Init and start Lazy nvim
