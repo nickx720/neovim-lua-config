@@ -17,7 +17,7 @@
       "initializationOptions": {
         "usePlaceholders": true,
         "staticcheck": true,
-        "vulncheck": true,
+        "vulncheck": "Imports",
         "hints": {
           "assignVariableTypes": true,
           "rangeVariableTypes": true,
