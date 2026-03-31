@@ -1,16 +1,10 @@
 local M = {}
 
 function M.setup()
-  -- Install parsers
-  require('nvim-treesitter').install { 'lua', 'javascript', 'typescript', 'rust', 'comment' }
+  local parsers = { 'lua', 'javascript', 'typescript', 'rust', 'go', 'json', 'comment' }
 
-  -- Enable treesitter highlighting and indentation for all filetypes
-  vim.api.nvim_create_autocmd('FileType', {
-    callback = function()
-      pcall(vim.treesitter.start)
-      vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-    end,
-  })
+  -- Install parsers
+  require('nvim-treesitter').install(parsers)
 
   vim.opt.foldmethod = 'manual'
 end
